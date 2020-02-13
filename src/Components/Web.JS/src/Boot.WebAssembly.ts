@@ -17,7 +17,7 @@ async function boot(options?: any): Promise<void> {
   }
   started = true;
 
-  setEventDispatcher((eventDescriptor, eventArgs) => DotNet.invokeMethodAsync('Microsoft.AspNetCore.Blazor', 'DispatchEvent', eventDescriptor, JSON.stringify(eventArgs)));
+  setEventDispatcher((eventDescriptor, eventArgs) => DotNet.invokeMethodAsync('Microsoft.AspNetCore.Components.WebAssembly', 'DispatchEvent', eventDescriptor, JSON.stringify(eventArgs)));
 
   // Configure environment for execution under Mono WebAssembly with shared-memory rendering
   const platform = Environment.setPlatform(monoPlatform);
@@ -29,7 +29,7 @@ async function boot(options?: any): Promise<void> {
   // Configure navigation via JS Interop
   window['Blazor']._internal.navigationManager.listenForNavigationEvents(async (uri: string, intercepted: boolean): Promise<void> => {
     await DotNet.invokeMethodAsync(
-      'Microsoft.AspNetCore.Blazor',
+      'Microsoft.AspNetCore.Components.WebAssembly',
       'NotifyLocationChanged',
       uri,
       intercepted
@@ -64,7 +64,7 @@ async function fetchBootConfigAsync() {
   return bootConfigResponse.json() as Promise<BootJsonData>;
 }
 
-// Keep in sync with BootJsonData in Microsoft.AspNetCore.Blazor.Build
+// Keep in sync with BootJsonData in Microsoft.AspNetCore.Components.WebAssembly.Build
 interface BootJsonData {
   entryAssembly: string;
   assemblies: string[];
