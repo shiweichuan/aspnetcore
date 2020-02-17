@@ -35,7 +35,8 @@ namespace Microsoft.AspNetCore.Blazor.DevServer.Server
                     {
                         cb.AddInMemoryCollection(new Dictionary<string, string>
                         {
-                            [WebHostDefaults.StaticWebAssetsKey] = name
+                            [WebHostDefaults.StaticWebAssetsKey] = name,
+                            ["useWebAssemblyDebugging"] = "true",
                         });
                     }
                 })
